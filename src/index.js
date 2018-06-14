@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
+import App from './App';
 // import Welcome from './Welcome';
 // import Comment from './Comment';
 // import Clock from './Clock';
@@ -598,154 +598,159 @@ import registerServiceWorker from './registerServiceWorker';
 /* ======================================= */
 
 /* ======================================= form */
-class App extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            'txtUsername': 'dangduc90',
-            'txtPassword': '123456',
-            'slGender': 1,
-            'rdLanguage': 'vi',
-            'football': true,
-            'golf': true,
-        };
-        this.handeSubmit = this.handeSubmit.bind(this);
-        this.onHandleChange = this.onHandleChange.bind(this);
-    }
-
-    onHandleChange(e) {
-        let target = e.target;
-        let name = target.name;
-        let value = target.type === 'checkbox' ? target.checked : target.value;
-        // console.log(value);
-        this.setState({
-            [name]: value
-        })
-    }
-
-    handeSubmit(e) {
-        e.preventDefault();
-        console.log(this.state);
-    }
-    render () {
-        return (
-            <form onSubmit={this.handeSubmit}>
-                <div className="form-group">
-                    <label htmlFor="username">Username</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="txtUsername"
-                        aria-describedby="usernameHelp"
-                        placeholder="Enter username"
-                        value={this.state.txtUsername}
-                        onChange={this.onHandleChange}/>
-                    <small id="usernameHelp" className="form-text text-muted">We'll never share your username with anyone
-                        else.
-                    </small>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        name="txtPassword"
-                        value={this.state.txtPassword}
-                        placeholder="Password"
-                        onChange={this.onHandleChange}/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="gender">Gender</label>
-                    <select
-                        className="form-control"
-                        id="gender"
-                        name="slGender"
-                        value={this.state.slGender}
-                        onChange={this.onHandleChange}>
-                        <option value={1}>Male</option>
-                        <option value={0}>Femail</option>
-                    </select>
-                </div>
-                <div className="rd-language">
-                    <p>Language</p>
-                    <div className="form-check">
-                        <input
-                            className="form-check-input"
-                            name="rdLanguage"
-                            type="radio"
-                            value="vi"
-                            checked={this.state.rdLanguage === 'vi'}
-                            onChange={this.onHandleChange} />
-                        <label className="form-check-label" htmlFor="vi">
-                            vi
-                        </label>
-                    </div>
-                    <div className="form-check">
-                        <input
-                            className="form-check-input"
-                            name="rdLanguage"
-                            type="radio"
-                            value="en"
-                            checked={this.state.rdLanguage === 'en'}
-                            onChange={this.onHandleChange} />
-                        <label className="form-check-label" htmlFor="en">
-                            en
-                        </label>
-                    </div>
-                    <div className="form-check">
-                        <input
-                            className="form-check-input"
-                            name="rdLanguage"
-                            type="radio"
-                            value="fr"
-                            checked={this.state.rdLanguage === 'fr'}
-                            onChange={this.onHandleChange} />
-                        <label className="form-check-label" htmlFor="fr">
-                            fr
-                        </label>
-                    </div>
-                </div>
-                <div className="ck-hobby">
-                    <p>Hobby</p>
-                    <div className="form-check">
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            name="golf"
-                            id="golf"
-                            value="Golf"
-                            checked={this.state.golf === true}
-                            onChange={this.onHandleChange} />
-                        <label className="form-check-label" htmlFor="golf">
-                            Golf
-                        </label>
-                    </div>
-                    <div className="form-check">
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            name="football"
-                            id="football"
-                            value="Football"
-                            checked={this.state.football === true}
-                            onChange={this.onHandleChange} />
-                        <label className="form-check-label" htmlFor="football">
-                            Football
-                        </label>
-                    </div>
-                </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
-        )
-    }
-}
+// class App extends React.Component{
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             'txtUsername': 'dangduc90',
+//             'txtPassword': '123456',
+//             'slGender': 1,
+//             'rdLanguage': 'vi',
+//             'football': true,
+//             'golf': true,
+//         };
+//         this.handeSubmit = this.handeSubmit.bind(this);
+//         this.onHandleChange = this.onHandleChange.bind(this);
+//     }
+//
+//     onHandleChange(e) {
+//         let target = e.target;
+//         let name = target.name;
+//         let value = target.type === 'checkbox' ? target.checked : target.value;
+//         // console.log(value);
+//         this.setState({
+//             [name]: value
+//         })
+//     }
+//
+//     handeSubmit(e) {
+//         e.preventDefault();
+//         console.log(this.state);
+//     }
+//     render () {
+//         return (
+//             <form onSubmit={this.handeSubmit}>
+//                 <div className="form-group">
+//                     <label htmlFor="username">Username</label>
+//                     <input
+//                         type="text"
+//                         className="form-control"
+//                         name="txtUsername"
+//                         aria-describedby="usernameHelp"
+//                         placeholder="Enter username"
+//                         value={this.state.txtUsername}
+//                         onChange={this.onHandleChange}/>
+//                     <small id="usernameHelp" className="form-text text-muted">We'll never share your username with anyone
+//                         else.
+//                     </small>
+//                 </div>
+//                 <div className="form-group">
+//                     <label htmlFor="password">Password</label>
+//                     <input
+//                         type="password"
+//                         className="form-control"
+//                         name="txtPassword"
+//                         value={this.state.txtPassword}
+//                         placeholder="Password"
+//                         onChange={this.onHandleChange}/>
+//                 </div>
+//                 <div className="form-group">
+//                     <label htmlFor="gender">Gender</label>
+//                     <select
+//                         className="form-control"
+//                         id="gender"
+//                         name="slGender"
+//                         value={this.state.slGender}
+//                         onChange={this.onHandleChange}>
+//                         <option value={1}>Male</option>
+//                         <option value={0}>Femail</option>
+//                     </select>
+//                 </div>
+//                 <div className="rd-language">
+//                     <p>Language</p>
+//                     <div className="form-check">
+//                         <input
+//                             className="form-check-input"
+//                             name="rdLanguage"
+//                             type="radio"
+//                             value="vi"
+//                             checked={this.state.rdLanguage === 'vi'}
+//                             onChange={this.onHandleChange} />
+//                         <label className="form-check-label" htmlFor="vi">
+//                             vi
+//                         </label>
+//                     </div>
+//                     <div className="form-check">
+//                         <input
+//                             className="form-check-input"
+//                             name="rdLanguage"
+//                             type="radio"
+//                             value="en"
+//                             checked={this.state.rdLanguage === 'en'}
+//                             onChange={this.onHandleChange} />
+//                         <label className="form-check-label" htmlFor="en">
+//                             en
+//                         </label>
+//                     </div>
+//                     <div className="form-check">
+//                         <input
+//                             className="form-check-input"
+//                             name="rdLanguage"
+//                             type="radio"
+//                             value="fr"
+//                             checked={this.state.rdLanguage === 'fr'}
+//                             onChange={this.onHandleChange} />
+//                         <label className="form-check-label" htmlFor="fr">
+//                             fr
+//                         </label>
+//                     </div>
+//                 </div>
+//                 <div className="ck-hobby">
+//                     <p>Hobby</p>
+//                     <div className="form-check">
+//                         <input
+//                             className="form-check-input"
+//                             type="checkbox"
+//                             name="golf"
+//                             id="golf"
+//                             value="Golf"
+//                             checked={this.state.golf === true}
+//                             onChange={this.onHandleChange} />
+//                         <label className="form-check-label" htmlFor="golf">
+//                             Golf
+//                         </label>
+//                     </div>
+//                     <div className="form-check">
+//                         <input
+//                             className="form-check-input"
+//                             type="checkbox"
+//                             name="football"
+//                             id="football"
+//                             value="Football"
+//                             checked={this.state.football === true}
+//                             onChange={this.onHandleChange} />
+//                         <label className="form-check-label" htmlFor="football">
+//                             Football
+//                         </label>
+//                     </div>
+//                 </div>
+//                 <button type="submit" className="btn btn-primary">Submit</button>
+//             </form>
+//         )
+//     }
+// }
 // ReactDOM.render(
 //     <App />,
 //     document.getElementById('root')
 // );
 /* ======================================= */
 
-
+/* ======================================= */
+ReactDOM.render(
+    <App />,
+    document.getElementById('root')
+);
+/* ======================================= */
 
 
 

@@ -4,9 +4,36 @@ class TaskForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            name: "",
-            status: 'true',
+        if (props.task) {
+            let task = props.task;
+            this.state = {
+                id: task.id,
+                name: task.name,
+                status: task.status,
+            }
+        } else {
+            this.state = {
+                id: "",
+                name: "",
+                status: 'false',
+            }
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps.task);
+        if (nextProps.task) {
+            let task = nextProps.task;
+            this.setState({
+                id: task.id,
+                name: task.name,
+                status: task.status,
+            });
+        } else {
+            this.setState({
+                id: "",
+                name: "",
+                status: 'false',
+            });
         }
     }
 
@@ -39,11 +66,15 @@ class TaskForm extends Component {
     };
 
     render() {
+        let {id} = this.state;
         return (
             <div>
                 <div className="panel panel-warning">
                     <div className="panel-heading">
-                        <h3 className="panel-title">Thêm Công Việc<span className="fa fa-times-circle text-right pull-right" onClick={() => this.onCloseAddForm()} /></h3>
+                        <h3 className="panel-title">
+                            {id ? "Cập nhật Công Việc" : "Thêm Công Việc" }
+                            <span className="fa fa-times-circle text-right pull-right" onClick={() => this.onCloseAddForm()} />
+                        </h3>
                     </div>
                     <div className="panel-body">
                         <form onSubmit={this.onSubmitAddForm}>

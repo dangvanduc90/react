@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TaskForm from "./components/TaskForm";
 import Control from "./components/Control";
 import TaskList from "./components/TaskList";
+import _ from "lodash";
 // import logo from './logo.svg';
 import './App.css';
 import uuidv4 from 'uuid/v4';
@@ -125,6 +126,7 @@ class App extends Component {
     onUpdateStatus = (id) => {
         let {tasks} = this.state;
         let index = this.findIndexById(id);
+        console.log(index);
         if (index !== -1) {
             tasks[index].status = !tasks[index].status;
             this.setState({
@@ -181,21 +183,22 @@ class App extends Component {
     };
 
     findIndexById = (id) => {
-        let indexOf = -1;
         let {tasks} = this.state;
-        tasks.forEach((task, index) => {
-            if (task.id === id) {
-                indexOf = index;
-                return false;
-            }
+        return _.findIndex(tasks, function (o) {
+            return o.id === id;
         });
-        return indexOf;
     };
 
     render() {
         let {tasks, isDisplayForm, taskEditing, filter, keyword, sort} = this.state;
         if (keyword) {
-            tasks = tasks.filter((task) => {
+            // Cach 1
+            // tasks = tasks.filter((task) => {
+            //     return task.name.toLowerCase().includes(keyword.toLowerCase());
+            // });
+
+            // Cach 2
+            tasks = _.filter(tasks, (task) => {
                 return task.name.toLowerCase().includes(keyword.toLowerCase());
             });
         }

@@ -745,11 +745,39 @@ import registerServiceWorker from './registerServiceWorker';
 // );
 /* ======================================= */
 
-/* ======================================= */
+/* ======================================= youtube */
 ReactDOM.render(
     <App />,
     document.getElementById('root')
 );
+/* ======================================= */
+
+/* ======================================= Ref focus */
+// class CustomTextInput extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.textInput = React.createRef();
+//         this.textInput1 = React.createRef();
+//     }
+//
+//     render() {
+//         return (
+//             <div>
+//                 <input type="text" ref={this.textInput}/>
+//                 <input type="text" ref={this.textInput1}/>
+//                 <input type="button" onClick={this.focusInput} value={"Focus Input"}/>
+//             </div>
+//         )
+//     }
+//
+//     focusInput = () => {
+//         this.textInput1.current.focus();
+//     }
+// }
+// ReactDOM.render(
+//     <CustomTextInput />,
+//     document.getElementById('root')
+// );
 /* ======================================= */
 
 

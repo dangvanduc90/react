@@ -13,6 +13,15 @@ class App extends Component {
             tasks: [], // id
             isDisplayForm: false,
             taskEditing: null,
+            filter: {
+                name: '',
+                status: -1,
+            },
+            keyword: '',
+            sort: {
+                by: 'name', // name, status
+                value: 1,
+            }
         };
     }
 
@@ -148,6 +157,29 @@ class App extends Component {
         this.onOpenForm();
     };
 
+    onFilter = (filterName, filterStatus) => {
+        this.setState({
+            filter: {
+                name: filterName,
+                status: parseInt(filterStatus, 10)
+            }
+        })
+    };
+
+    onSearch = (keyword) => {
+        this.setState({
+            keyword: keyword,
+        });
+    };
+
+    onSort = (sort) => {
+        this.setState({
+            sort: sort,
+        }, () => {
+            // console.log(this.state.sort);
+        })
+    };
+
     findIndexById = (id) => {
         let indexOf = -1;
         let {tasks} = this.state;
@@ -161,7 +193,57 @@ class App extends Component {
     };
 
     render() {
-        let {tasks, isDisplayForm, taskEditing} = this.state;
+        let {tasks, isDisplayForm, taskEditing, filter, keyword, sort} = this.state;
+        if (keyword) {
+            tasks = tasks.filter((task) => {
+                return task.name.toLowerCase().includes(keyword.toLowerCase());
+            });
+        }
+        if (filter.name) {
+            tasks = tasks.filter((task) => {
+                return task.name.toLowerCase().includes(filter.name.toLowerCase());
+            });
+        }
+        tasks = tasks.filter((task) => {
+            switch (filter.status) {
+                case -1: // tat ca
+                    return true;
+                case 0: // an?
+                    return !task.status;
+                case 1: // kich hoat
+                    return task.status;
+                default:
+                    return true;
+            }
+        });
+
+        if (sort) {
+            switch (sort.by) {
+                case 'name':
+                    tasks.sort((a, b) => {
+                        if (a.name > b.name)
+                            return sort.value;
+                        else if (a.name < b.name)
+                            return -sort.value;
+                        else
+                            return 0;
+                    });
+                    break;
+                case 'status':
+                        tasks.sort((a, b) => {
+                            if (a.status > b.status)
+                                return sort.value;
+                            else if (a.status < b.status)
+                                return -sort.value;
+                            else
+                                return 0;
+                        });
+                    break;
+                default:
+                    break;
+            }
+        }
+
         return (
             <div className="container">
                 <div className="text-center">
@@ -176,7 +258,7 @@ class App extends Component {
                         <button type="button" className="btn btn-primary" onClick={() =>this.onToggleForm()}><span className="fa fa-plus mr-5" />Thêm Công Việc</button>
                         <button type="button" className="btn btn-primary ml-15" onClick={this.onGenerateData}>Data Sample</button>
                         <div className="row mt-15">
-                            <Control/>
+                            <Control onSearch={this.onSearch} onSort={this.onSort}/>
                         </div>
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -185,6 +267,7 @@ class App extends Component {
                                     onUpdateStatus={this.onUpdateStatus}
                                     onDelete={this.onDelete}
                                     onUpdate={this.onUpdate}
+                                    onFilter={this.onFilter}
                                 />
                             </div>
                         </div>

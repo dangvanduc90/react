@@ -319,7 +319,7 @@ import registerServiceWorker from './registerServiceWorker';
 //
 //     render() {
 //         return (
-//             <form action="#">
+//             <form actions="#">
 //                 <label htmlFor="">Is Going:
 //                     <input type="checkbox" name="isGoing" checked={this.state.isGoing} onChange={this.handleChange} />
 //                 </label>
@@ -519,7 +519,7 @@ import registerServiceWorker from './registerServiceWorker';
 //
 //     render() {
 //         return (
-//             <form action="">
+//             <form actions="">
 //                 <input type="text" name="keyword" placeholder="Search.." onChange={this.handleFilterTextChangeSearch} value={this.props.filterText} />
 //                 <p>
 //                     <input type="checkbox" name="only_stock" onChange={this.handleInStockChangeSearch} checked={this.props.inStockOnly} />
@@ -746,8 +746,17 @@ import registerServiceWorker from './registerServiceWorker';
 /* ======================================= */
 
 /* ======================================= youtube */
+import {createStore} from "redux";
+import myReducers from "./reducers/index";
+import {Provider} from "react-redux";
+
+const store = createStore(
+    myReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 ReactDOM.render(
-    <App />,
+    <Provider store={store}>
+        <App />
+    </Provider>,
     document.getElementById('root')
 );
 /* ======================================= */

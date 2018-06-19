@@ -31,11 +31,17 @@ const myReducers = (state = initialState, action) => {
         case types.UPDATE_STATUS:
             let index = findIndex(state, action.id);
             if (index !== -1) {
-                // state[index].status = !state[index].status;
                 state[index] = {
                     ...state[index],
                     status: !state[index].status
                 };
+                localStorage.setItem('tasks', JSON.stringify(state));
+            }
+            return [...state];
+        case types.DELETE_TASK:
+            let indexDelete = findIndex(state, action.id);
+            if (indexDelete !== -1) {
+                state.splice(indexDelete, 1);
                 localStorage.setItem('tasks', JSON.stringify(state));
             }
             return [...state];

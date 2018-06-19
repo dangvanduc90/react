@@ -31,3 +31,9 @@ export const update_status = (id) => {
         id: id
     }
 };
+export const delete_task = (id) => {
+    return {
+        type: types.DELETE_TASK,
+        id: id
+    }
+};

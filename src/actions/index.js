@@ -25,3 +25,9 @@ export const open_form = () => {
         type: types.CLOSE_FORM,
     }
 };
+export const update_status = (id) => {
+    return {
+        type: types.UPDATE_STATUS,
+        id: id
+    }
+};

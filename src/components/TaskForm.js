@@ -4,37 +4,38 @@ import * as actions from "./../actions/index";
 
 class TaskForm extends Component {
 
+    defaultState = () => {
+        return {
+            id: "",
+            name: "",
+            status: 'false',
+        }
+    };
+
     constructor(props) {
         super(props);
-        if (props.task) {
-            let task = props.task;
+        if (props.taskEditing) {
+            let task = props.taskEditing;
             this.state = {
                 id: task.id,
                 name: task.name,
-                status: task.status,
+                status: task.status + "",
             }
         } else {
-            this.state = {
-                id: "",
-                name: "",
-                status: 'false',
-            }
+            this.state = this.defaultState();
         }
     }
+
     componentWillReceiveProps(nextProps) {
-        if (nextProps.task) {
-            let task = nextProps.task;
+        if (nextProps.taskEditing) {
+            let task = nextProps.taskEditing;
             this.setState({
                 id: task.id,
                 name: task.name,
-                status: task.status,
+                status: task.status + "",
             });
         } else {
-            this.setState({
-                id: "",
-                name: "",
-                status: 'false',
-            });
+            this.onClear();
         }
     }
 
@@ -54,20 +55,18 @@ class TaskForm extends Component {
 
     onSubmitAddForm = (e) => {
         e.preventDefault();
-        this.props.onAddTask(this.state);
+        this.props.onSaveTask(this.state);
         this.onClear();
         this.onCloseAddForm();
     };
 
     onClear = () => {
-        this.setState({
-            name: "",
-            status: 'true',
-        });
+        this.setState(this.defaultState());
     };
 
     render() {
         let {id} = this.state;
+        if (!this.props.isDisplayForm) return null;
         return (
             <div>
                 <div className="panel panel-warning">
@@ -83,7 +82,7 @@ class TaskForm extends Component {
                                 <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.onChange} />
                             </div>
                             <label>Trạng Thái :</label>
-                            <select className="form-control" name="status" onChange={this.onChange}>
+                            <select className="form-control" name="status" value={this.state.status} onChange={this.onChange}>
                                 <option value={true}>Kích Hoạt</option>
                                 <option value={false}>Ẩn</option>
                             </select>
@@ -102,14 +101,15 @@ class TaskForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-
+        isDisplayForm: state.isDisplayForm,
+        taskEditing: state.taskEditing,
     }
 };
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        onAddTask: (task) => {
-            dispatch(actions.add_task(task));
+        onSaveTask: (task) => {
+            dispatch(actions.save_task(task));
         },
         onCloseForm: () => {
             dispatch(actions.close_form());

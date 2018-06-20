@@ -19,13 +19,27 @@ const myReducers = (state = initialState, action) => {
     switch (action.type) {
         case types.LIST_ALL:
             break;
-        case types.ADD_TASK:
-            let newTask = {
-                id: uuidv4(),
-                name: action.task.name,
-                status: action.task.status === 'true',
-            };
-            state.push(newTask);
+        case types.SAVE_TASK:
+            let id = action.task.id;
+            if (id) { // update
+                let index = findIndex(state, id);
+                if (index !== -1) {
+                    state[index] = {
+                        ...state[index],
+                        name: action.task.name,
+                        status: action.task.status === 'true',
+                    };
+                    localStorage.setItem('tasks', JSON.stringify(state));
+                }
+            } else { // insert
+                let newTask = {
+                    id: uuidv4(),
+                    name: action.task.name,
+                    status: action.task.status === 'true',
+                };
+                state.push(newTask);
+            }
+
             localStorage.setItem('tasks', JSON.stringify(state));
             return [...state];
         case types.UPDATE_STATUS:

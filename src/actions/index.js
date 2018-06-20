@@ -4,9 +4,9 @@ export const list_all = () => {
         type: types.LIST_ALL,
     }
 };
-export const add_task = (task) => {
+export const save_task = (task) => {
     return {
-        type: types.ADD_TASK,
+        type: types.SAVE_TASK,
         task: task
     }
 };
@@ -22,7 +22,7 @@ export const close_form = () => {
 };
 export const open_form = () => {
     return {
-        type: types.CLOSE_FORM,
+        type: types.OPEN_FORM,
     }
 };
 export const update_status = (id) => {
@@ -35,5 +35,11 @@ export const delete_task = (id) => {
     return {
         type: types.DELETE_TASK,
         id: id
+    }
+};
+export const update_task = (task) => {
+    return {
+        type: types.UPDATE_TASK,
+        task: task
     }
 };

@@ -3,7 +3,6 @@ import TaskForm from "./components/TaskForm";
 import Control from "./components/Control";
 import TaskList from "./components/TaskList";
 import _ from "lodash";
-// import logo from './logo.svg';
 import './App.css';
 import uuidv4 from 'uuid/v4';
 import {connect} from "react-redux";
@@ -13,7 +12,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            taskEditing: null,
+            // taskEditing: null,
             filter: {
                 name: '',
                 status: -1,
@@ -61,22 +60,16 @@ class App extends Component {
     };
 
     onToggleForm = () => { // Add task
-        // if (this.state.isDisplayForm && this.state.taskEditing !== null) {
-        //     this.setState({
-        //         isDisplayForm: true,
-        //         taskEditing: null,
-        //     });
-        // } else {
-        //     this.setState({
-        //         isDisplayForm: !this.state.isDisplayForm,
-        //         taskEditing: null,
-        //     });
-        // }
-        this.props.onToggleForm();
-    };
-
-    onOpenForm = () => {
-        this.props.onOpenForm();
+        if (this.props.isDisplayForm && this.props.taskEditing !== null) {
+            this.props.onOpenForm();
+        } else { // update task
+            this.props.onToggleForm();
+        }
+        this.props.onClearTask({
+            id: "",
+            name: '',
+            status: false,
+        });
     };
 
     // onSubmit = (data) => {
@@ -109,16 +102,16 @@ class App extends Component {
     //     }
     // };
 
-    onUpdate = (id) => {
-        let {tasks} = this.state;
-        let index = this.findIndexById(id);
-        if (index !== -1) {
-            this.setState({
-                taskEditing: tasks[index]
-            });
-        }
-        this.onOpenForm();
-    };
+    // onUpdate = (id) => {
+    //     let {tasks} = this.state;
+    //     let index = this.findIndexById(id);
+    //     if (index !== -1) {
+    //         this.setState({
+    //             taskEditing: tasks[index]
+    //         });
+    //     }
+    //     this.onOpenForm();
+    // };
 
     onFilter = (filterName, filterStatus) => {
         this.setState({
@@ -138,8 +131,6 @@ class App extends Component {
     onSort = (sort) => {
         this.setState({
             sort: sort,
-        }, () => {
-            // console.log(this.state.sort);
         })
     };
 
@@ -151,7 +142,7 @@ class App extends Component {
     };
 
     render() {
-        let {taskEditing, filter, keyword, sort} = this.state;
+        let {filter, keyword, sort} = this.state;
         let {isDisplayForm} = this.props;
         // if (keyword) {
         //     // Cach 1
@@ -217,7 +208,7 @@ class App extends Component {
                 </div>
                 <div className="row">
                     <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        {isDisplayForm && <TaskForm task={taskEditing}/>}
+                        {isDisplayForm && <TaskForm />}
                     </div>
                     <div className={isDisplayForm ? ("col-xs-8") : ("col-xs-12")}>
                         <button type="button" className="btn btn-primary" onClick={() =>this.onToggleForm()}><span className="fa fa-plus mr-5" />Thêm Công Việc</button>
@@ -228,7 +219,7 @@ class App extends Component {
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <TaskList
-                                    onUpdate={this.onUpdate}
+                                    // onUpdate={this.onUpdate}
                                     onFilter={this.onFilter}
                                 />
                             </div>
@@ -242,7 +233,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isDisplayForm: state.isDisplayForm
+        isDisplayForm: state.isDisplayForm,
+        taskEditing: state.taskEditing
     }
 };
 
@@ -250,6 +242,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onToggleForm: () => {
             dispatch(actions.toggle_form());
+        },
+        onClearTask: (task) => {
+            dispatch(actions.update_task(task));
         },
         onOpenForm: () => {
             dispatch(actions.open_form());

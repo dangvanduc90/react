@@ -12,7 +12,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // taskEditing: null,
             filter: {
                 name: '',
                 status: -1,
@@ -72,56 +71,6 @@ class App extends Component {
         });
     };
 
-    // onSubmit = (data) => {
-    //     let {tasks} = this.state;
-    //     if (data.id) { // update
-    //         let index = this.findIndexById(data.id);
-    //         tasks.splice(index, 1);
-    //
-    //         let task = {
-    //             id: data.id,
-    //             name: data.name,
-    //             status: data.status === 'true',
-    //         };
-    //         tasks.push(task);
-    //         localStorage.setItem('tasks', JSON.stringify(tasks));
-    //         this.setState({
-    //             tasks: tasks
-    //         });
-    //     } else { // add one
-    //         let task = {
-    //             id: uuidv4(),
-    //             name: data.name,
-    //             status: data.status === 'true',
-    //         };
-    //         tasks.push(task);
-    //         this.setState({
-    //             tasks: tasks
-    //         });
-    //         localStorage.setItem('tasks', JSON.stringify(tasks));
-    //     }
-    // };
-
-    // onUpdate = (id) => {
-    //     let {tasks} = this.state;
-    //     let index = this.findIndexById(id);
-    //     if (index !== -1) {
-    //         this.setState({
-    //             taskEditing: tasks[index]
-    //         });
-    //     }
-    //     this.onOpenForm();
-    // };
-
-    onFilter = (filterName, filterStatus) => {
-        this.setState({
-            filter: {
-                name: filterName,
-                status: parseInt(filterStatus, 10)
-            }
-        })
-    };
-
     onSearch = (keyword) => {
         this.setState({
             keyword: keyword,
@@ -155,23 +104,6 @@ class App extends Component {
         //         return task.name.toLowerCase().includes(keyword.toLowerCase());
         //     });
         // }
-        // if (filter.name) {
-        //     tasks = tasks.filter((task) => {
-        //         return task.name.toLowerCase().includes(filter.name.toLowerCase());
-        //     });
-        // }
-        // tasks = tasks.filter((task) => {
-        //     switch (filter.status) {
-        //         case -1: // tat ca
-        //             return true;
-        //         case 0: // an?
-        //             return !task.status;
-        //         case 1: // kich hoat
-        //             return task.status;
-        //         default:
-        //             return true;
-        //     }
-        // });
 
         // if (sort) {
         //     switch (sort.by) {
@@ -220,7 +152,7 @@ class App extends Component {
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <TaskList
                                     // onUpdate={this.onUpdate}
-                                    onFilter={this.onFilter}
+                                    // onFilter={this.onFilter}
                                 />
                             </div>
                         </div>

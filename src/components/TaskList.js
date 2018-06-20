@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import TaskItem from "./TaskItem";
 import {connect} from "react-redux";
+import * as actions from "./../actions/index";
 
 class TaskList extends Component {
 
@@ -15,18 +16,39 @@ class TaskList extends Component {
     onChange = (e) => {
         let target = e.target;
         let name = target.name;
-        let value = target.value;
+        let value = target.type === 'checkbox' ? target.checked : target.value;
         this.setState({
             [name]: value
         });
-        this.props.onFilter(
-            name === "filterName" ? value : this.state.filterName,
-            name === "filterStatus" ? value : this.state.filterStatus,
-        );
+        let filter = {
+            filterName: name === "filterName" ? value : this.state.filterName,
+            filterStatus: name === "filterStatus" ? value : this.state.filterStatus,
+        };
+        this.props.onFilter(filter);
     };
 
     render() {
-        let {tasks, filterName, filterStatus} = this.props;
+        // let {tasks, filterName, filterStatus} = this.props;
+        let {tasks, filterTask} = this.props;
+
+        if (filterTask.filterName) {
+            tasks = tasks.filter((task) => {
+                return task.name.toLowerCase().includes(filterTask.filterName.toLowerCase());
+            });
+        }
+        tasks = tasks.filter((task) => {
+            switch (filterTask.filterStatus) {
+                case -1: // tat ca
+                    return true;
+                case 0: // an?
+                    return !task.status;
+                case 1: // kich hoat
+                    return task.status;
+                default:
+                    return true;
+            }
+        });
+
         let element = tasks.map((task, index) =>
             {
                 return <TaskItem
@@ -55,7 +77,7 @@ class TaskList extends Component {
                                 type="text"
                                 className="form-control"
                                 name="filterName"
-                                value={filterName}
+                                // value={filterName}
                                 onChange={this.onChange}
                             />
                         </td>
@@ -63,7 +85,7 @@ class TaskList extends Component {
                             <select
                                 className="form-control"
                                 name="filterStatus"
-                                value={filterStatus}
+                                // value={filterStatus}
                                 onChange={this.onChange}
                             >
                                 <option value={-1}>Tất Cả</option>
@@ -83,8 +105,17 @@ class TaskList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        tasks: state.tasks
+        tasks: state.tasks,
+        filterTask: state.filterTask,
     }
 };
 
-export default connect(mapStateToProps, null)(TaskList);
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onFilter: (filter) => {
+            dispatch(actions.filter_task(filter));
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList);

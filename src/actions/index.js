@@ -43,3 +43,9 @@ export const update_task = (task) => {
         task: task
     }
 };
+export const filter_task = (filter) => {
+    return {
+        type: types.FILTER_TASK,
+        filter: filter
+    }
+};

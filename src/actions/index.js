@@ -55,3 +55,9 @@ export const search_task = (keyword) => { // string
         keyword: keyword
     }
 };
+export const sort_task = (sort) => { // object {name, status}
+    return {
+        type: types.SORT_TASK,
+        sort: sort
+    }
+};

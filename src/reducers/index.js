@@ -4,6 +4,7 @@ import taskEditing from "./update_task";
 import isDisplayForm from "./toggle_form";
 import filterTask from "./filter_task";
 import searchTask from "./search_task";
+import sortTask from "./sort_task";
 
 const myReducers = combineReducers({
     tasks: tasks,
@@ -11,6 +12,7 @@ const myReducers = combineReducers({
     taskEditing: taskEditing,
     filterTask: filterTask,
     searchTask: searchTask,
+    sortTask: sortTask,
 
 });
 

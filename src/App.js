@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import TaskForm from "./components/TaskForm";
 import Control from "./components/Control";
 import TaskList from "./components/TaskList";
-import _ from "lodash";
 import './App.css';
 import uuidv4 from 'uuid/v4';
 import {connect} from "react-redux";
@@ -12,11 +11,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter: {
-                name: '',
-                status: -1,
-            },
-            keyword: '',
             sort: {
                 by: 'name', // name, status
                 value: 1,
@@ -71,49 +65,9 @@ class App extends Component {
         });
     };
 
-    onSort = (sort) => {
-        this.setState({
-            sort: sort,
-        })
-    };
-
-    findIndexById = (id) => {
-        let {tasks} = this.state;
-        return _.findIndex(tasks, function (o) {
-            return o.id === id;
-        });
-    };
 
     render() {
-        let {filter, keyword, sort} = this.state;
         let {isDisplayForm} = this.props;
-
-        // if (sort) {
-        //     switch (sort.by) {
-        //         case 'name':
-        //             tasks.sort((a, b) => {
-        //                 if (a.name > b.name)
-        //                     return sort.value;
-        //                 else if (a.name < b.name)
-        //                     return -sort.value;
-        //                 else
-        //                     return 0;
-        //             });
-        //             break;
-        //         case 'status':
-        //                 tasks.sort((a, b) => {
-        //                     if (a.status > b.status)
-        //                         return sort.value;
-        //                     else if (a.status < b.status)
-        //                         return -sort.value;
-        //                     else
-        //                         return 0;
-        //                 });
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        // }
 
         return (
             <div className="container">
@@ -129,14 +83,11 @@ class App extends Component {
                         <button type="button" className="btn btn-primary" onClick={() =>this.onToggleForm()}><span className="fa fa-plus mr-5" />Thêm Công Việc</button>
                         <button type="button" className="btn btn-primary ml-15" onClick={this.onGenerateData}>Data Sample</button>
                         <div className="row mt-15">
-                            <Control onSort={this.onSort}/>
+                            <Control />
                         </div>
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <TaskList
-                                    // onUpdate={this.onUpdate}
-                                    // onFilter={this.onFilter}
-                                />
+                                <TaskList />
                             </div>
                         </div>
                     </div>

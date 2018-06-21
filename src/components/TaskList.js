@@ -29,7 +29,7 @@ class TaskList extends Component {
     };
 
     render() {
-        let {tasks, filterTask, keyword} = this.props;
+        let {tasks, filterTask, keyword, sort} = this.props;
 
         if (filterTask.filterName) {
             tasks = tasks.filter((task) => {
@@ -61,6 +61,31 @@ class TaskList extends Component {
             });
         }
 
+        switch (sort.by) {
+            case 'name':
+                tasks.sort((a, b) => {
+                    if (a.name > b.name)
+                        return sort.value;
+                    else if (a.name < b.name)
+                        return -sort.value;
+                    else
+                        return 0;
+                });
+                break;
+            case 'status':
+                    tasks.sort((a, b) => {
+                        if (a.status > b.status)
+                            return sort.value;
+                        else if (a.status < b.status)
+                            return -sort.value;
+                        else
+                            return 0;
+                    });
+                break;
+            default:
+                break;
+        }
+
         let element = tasks.map((task, index) =>
             {
                 return <TaskItem
@@ -89,7 +114,7 @@ class TaskList extends Component {
                                 type="text"
                                 className="form-control"
                                 name="filterName"
-                                // value={filterName}
+                                value={filterTask.filterName}
                                 onChange={this.onChange}
                             />
                         </td>
@@ -97,7 +122,7 @@ class TaskList extends Component {
                             <select
                                 className="form-control"
                                 name="filterStatus"
-                                // value={filterStatus}
+                                value={filterTask.filterStatus}
                                 onChange={this.onChange}
                             >
                                 <option value={-1}>Tất Cả</option>
@@ -120,6 +145,7 @@ const mapStateToProps = (state) => {
         tasks: state.tasks,
         filterTask: state.filterTask,
         keyword: state.searchTask,
+        sort: state.sortTask,
     }
 };
 

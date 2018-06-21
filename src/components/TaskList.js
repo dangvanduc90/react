@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import TaskItem from "./TaskItem";
 import {connect} from "react-redux";
 import * as actions from "./../actions/index";
+import * as _ from "lodash";
 
 class TaskList extends Component {
 
@@ -28,8 +29,7 @@ class TaskList extends Component {
     };
 
     render() {
-        // let {tasks, filterName, filterStatus} = this.props;
-        let {tasks, filterTask} = this.props;
+        let {tasks, filterTask, keyword} = this.props;
 
         if (filterTask.filterName) {
             tasks = tasks.filter((task) => {
@@ -48,6 +48,18 @@ class TaskList extends Component {
                     return true;
             }
         });
+
+        if (keyword) {
+            // Cach 1
+            // tasks = tasks.filter((task) => {
+            //     return task.name.toLowerCase().includes(keyword.toLowerCase());
+            // });
+
+            // Cach 2
+            tasks = _.filter(tasks, (task) => {
+                return task.name.toLowerCase().includes(keyword.toLowerCase());
+            });
+        }
 
         let element = tasks.map((task, index) =>
             {
@@ -107,6 +119,7 @@ const mapStateToProps = (state) => {
     return {
         tasks: state.tasks,
         filterTask: state.filterTask,
+        keyword: state.searchTask,
     }
 };
 

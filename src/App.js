@@ -71,12 +71,6 @@ class App extends Component {
         });
     };
 
-    onSearch = (keyword) => {
-        this.setState({
-            keyword: keyword,
-        });
-    };
-
     onSort = (sort) => {
         this.setState({
             sort: sort,
@@ -93,17 +87,6 @@ class App extends Component {
     render() {
         let {filter, keyword, sort} = this.state;
         let {isDisplayForm} = this.props;
-        // if (keyword) {
-        //     // Cach 1
-        //     // tasks = tasks.filter((task) => {
-        //     //     return task.name.toLowerCase().includes(keyword.toLowerCase());
-        //     // });
-        //
-        //     // Cach 2
-        //     tasks = _.filter(tasks, (task) => {
-        //         return task.name.toLowerCase().includes(keyword.toLowerCase());
-        //     });
-        // }
 
         // if (sort) {
         //     switch (sort.by) {
@@ -146,7 +129,7 @@ class App extends Component {
                         <button type="button" className="btn btn-primary" onClick={() =>this.onToggleForm()}><span className="fa fa-plus mr-5" />Thêm Công Việc</button>
                         <button type="button" className="btn btn-primary ml-15" onClick={this.onGenerateData}>Data Sample</button>
                         <div className="row mt-15">
-                            <Control onSearch={this.onSearch} onSort={this.onSort}/>
+                            <Control onSort={this.onSort}/>
                         </div>
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
